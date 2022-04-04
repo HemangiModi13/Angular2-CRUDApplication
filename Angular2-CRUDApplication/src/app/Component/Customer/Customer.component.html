@@ -1,0 +1,194 @@
+﻿
+<style>
+    .errorcl {
+        color: red;
+    }
+</style>
+<div class="app-content mt10">
+    <div class="row col-xs-12 mt10">
+        <div class="text-center">
+            <app-loader *ngIf="Loadershow"></app-loader>
+            <h2>Customer Information</h2>
+        </div>
+    </div>
+    <div class="row col-xs-12 mt10">
+        <div class="pull-right">
+            <a class="pull-right ml10  btn btn-default btn-primary" (click)="OpenModal()">Add New Customer</a>
+        </div>
+    </div>
+
+    <div class="col-xs-12 mt20">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        index
+                        <td></td>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>PhoneNo</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let obj of CustomerList;let i=index">
+                    <td>{{i}}</td>
+                    <td>{{obj.FirstName}}</td>
+                    <td>{{obj.LastName}}</td>
+                    <td>{{obj.Email}}</td>
+                    <td>{{obj.PhoneNo}}</td>
+                    <td>
+                        <div class="pull-right">
+                            <button (click)="EditCustomer(obj)" class="btn btn-primary">Edit</button>
+                            <button (click)="DeleteCustomer(obj.ID,i)" class="btn btn-primary">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <modal #myModal>
+        <modal-header>
+            <h1>{{ModelLable}}</h1>
+        </modal-header>
+        <modal-content>
+            <form class="form-horizontal" #customerForm="ngForm" [formGroup]="frmCustomer" novalidate>
+                <!--#customerForm="ngForm"-->
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.FirstName.hasError('required')) && !IsValid ,'has-success':(!frmCustomer.controls.FirstName.hasError('required')) }">
+                    <label class="control-label col-sm-3" for="txtFirstName">FirstName</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtFirstName" placeholder="Enter First Name" name="FirstName" [(ngModel)]="Customer_Modal.firstName" formControlName="FirstName" required>
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.FirstName.hasError('required')">FirstName is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- we can use this way also [ngClass]="(frmCustomer.controls.LastName.hasError('required')) ? 'has-error': 'has-success'"-->
+
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.LastName.hasError('required')) && !IsValid ,'has-success':(!frmCustomer.controls.LastName.hasError('required')) }">
+                    <label class="control-label col-sm-3" for="txtLastName">LastName</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtLastName" formControlName="LastName" placeholder="Enter Last Name" name="LastName" [(ngModel)]="Customer_Modal.lastName" required>
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.LastName.hasError('required')">LastName is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.Email.hasError('required')) && !IsValid || (frmCustomer.controls.Email.hasError('pattern')) ,'has-success':(!frmCustomer.controls.Email.hasError('required')) }">
+                    <label class="control-label col-sm-3" for="txtEmail">Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="txtEmail" formControlName="Email" placeholder="Enter Email" name="Email" [(ngModel)]="Customer_Modal.email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required>
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.Email.hasError('required')">Email is required</div>
+                        </div>
+                        <div class='form-text error errorcl' *ngIf="frmCustomer.controls.Email.hasError('pattern')">
+                            Email format should be <b>joe@abc.com</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.Password.hasError('required')) && !IsValid ,'has-success':(!frmCustomer.controls.Password.hasError('required')) }">
+                    <label class="control-label col-sm-3" for="txtEmail">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="txtPassword" formControlName="Password" placeholder="Enter Password" name="Password" [(ngModel)]="Customer_Modal.password" required>
+
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.Password.hasError('required')">Password is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.ConfirmPassword.hasError('required')) && !IsValid,'has-success': (!frmCustomer.controls.ConfirmPassword.hasError('required'))}">
+                    <label class="control-label col-sm-3" for="txtConfirmPassword">ConfirmPassword</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="txtConfirmPassword" placeholder="Enter Confirm Password" name="ConfirmPassword" [(ngModel)]="Customer_Modal.confirmPassword" formControlName="ConfirmPassword" required>
+                        <div class='form-text error' *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.ConfirmPassword.hasError('required')">ConfirmPassword is required.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.PhoneNo.hasError('required')) && !IsValid ,'has-success':(!frmCustomer.controls.PhoneNo.hasError('required')) }">
+                    <label class="control-label col-sm-3" for="txtPhoneNo">PhoneNo</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="txtPhoneNo" placeholder="Enter PhoneNo" formControlName="PhoneNo" name="PhoneNo" [(ngModel)]="Customer_Modal.phoneNo" required>
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.PhoneNo.hasError('required')">Phone No is required</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.Country.hasError('required')) && !IsValid ,'has-success' :(!frmCustomer.controls.Country.hasError('required')) }">
+                    <label class="control-label col-sm-3">Country</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="Country" (change)="GetStateListByCountryID($event.target.value)" formControlName="Country" [(ngModel)]="Customer_Modal.Country" id="drpCountry" required>
+                            <option value="">--Select--</option>
+                            <option *ngFor="let country of CountryList" value={{country.CountryID}}>
+                                {{country.CountryName}}
+                            </option>
+                        </select>
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.Country.hasError('required')">Country is required</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.State.hasError('required')) && !IsValid ,'has-success' :(!frmCustomer.controls.State.hasError('required')) }">
+                    <label class="control-label col-sm-3">State</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="State" (change)="GetCityListByStateID($event.target.value)" formControlName="State" [(ngModel)]="Customer_Modal.State" id="drpState" required>
+                            <option value="">--Select--</option>
+                            <option *ngFor="let state of StateList" value={{state.StateID}}>
+                                {{state.StateName}}
+                            </option>
+                        </select>
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.State.hasError('required')">State is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" [ngClass]="{'has-error':(frmCustomer.controls.City.hasError('required')) && !IsValid ,'has-success' :(!frmCustomer.controls.City.hasError('required')) }">
+                    <label class="control-label col-sm-3">City</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" name="City" [(ngModel)]="Customer_Modal.City" id="drpCity" formControlName="City" required>
+                            <option value="">--Select--</option>
+                            <option *ngFor="let city of CityList" value={{city.CityID}}>
+                                {{city.CityName}}
+                            </option>
+                        </select>
+                        <div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.City.hasError('required')">City is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <!--[ngClass]="{'has-error':(frmCustomer.controls.Picture.hasError('required')) && !IsValid ,'has-success' :(!frmCustomer.controls.Picture.hasError('required')) }"-->
+                    <label class="control-label col-sm-3">Picture</label>
+                    <div class="col-sm-9">
+                        <img src='{{ImagePreview}}' style="width:200px;height:200px;" />
+                        <input type="file" #btnUpload id="myUpload" [(ngModel)]="Customer_Modal.Picture" name="Picture" value="Upload" class="upload" (change)="fileChange($event)" accept="image/*" />
+                        <!--formControlName="Picture" required--> 
+
+                        <!--<div class="form-text error" *ngIf="!IsValid">
+                            <div class="errorcl" *ngIf="frmCustomer.controls.Picture.hasError('required')">Image is required</div>
+                        </div>-->
+                    </div>
+                </div>
+            </form>
+        </modal-content>
+        <modal-footer>
+            <button type="submit" class="btn btn-default" (click)="SaveCustomer(Customer_Modal)">Submit</button> <!--[disabled]="frmCustomer.invalid"-->
+            <button class="btn btn-primary" (click)="myModal.close()">close</button>
+        </modal-footer>
+    </modal>
+</div>
+
+

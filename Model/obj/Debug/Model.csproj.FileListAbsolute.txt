@@ -1,0 +1,14 @@
+D:\D\New\Angular2-Laxmna\Angular2-CRUDApplication\Model\bin\Debug\Model.dll
+D:\D\New\Angular2-Laxmna\Angular2-CRUDApplication\Model\bin\Debug\Model.pdb
+D:\D\New\Angular2-Laxmna\Angular2-CRUDApplication\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+D:\D\New\Angular2-Laxmna\Angular2-CRUDApplication\Model\obj\Debug\Model.dll
+D:\D\New\Angular2-Laxmna\Angular2-CRUDApplication\Model\obj\Debug\Model.pdb
+G:\Angular2-CRUDApplication\Angular2-CRUDApplication\Model\bin\Debug\Model.dll
+G:\Angular2-CRUDApplication\Angular2-CRUDApplication\Model\bin\Debug\Model.pdb
+G:\Angular2-CRUDApplication\Angular2-CRUDApplication\Model\obj\Debug\Model.dll
+G:\Angular2-CRUDApplication\Angular2-CRUDApplication\Model\obj\Debug\Model.pdb
+\\NATRIXDATASERVE\Users\Laxman\Angular2-CRUDApplication\Model\bin\Debug\Model.dll
+\\NATRIXDATASERVE\Users\Laxman\Angular2-CRUDApplication\Model\bin\Debug\Model.pdb
+\\NATRIXDATASERVE\Users\Laxman\Angular2-CRUDApplication\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+\\NATRIXDATASERVE\Users\Laxman\Angular2-CRUDApplication\Model\obj\Debug\Model.dll
+\\NATRIXDATASERVE\Users\Laxman\Angular2-CRUDApplication\Model\obj\Debug\Model.pdb
